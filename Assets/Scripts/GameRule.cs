@@ -17,6 +17,8 @@ public class GameRule : MonoBehaviour
         _gameEvent.useItem += useItem;
 
         _gameEvent.enemyHitPlayer += damagePlayer;
+
+        _gameEvent.retry += reset;
     }
 
     void damageEnemy(GameObject playerBullet, GameObject enemy)
@@ -65,5 +67,25 @@ public class GameRule : MonoBehaviour
         }
         _gameState.gameStatus = GameStatus.IsPlaying;
         _gameState.itemPanel.SetActive(false);
+    }
+
+    void reset()
+    {
+        int enemyCount = _gameState.enemys.Count;
+        for ( int i=enemyCount-1 ; i>=0 ; i-- )
+        {
+            enemyCount = _gameState.enemys.Count;
+            GameObject enemy = _gameState.enemys[i];
+            _gameState.enemys.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
+        int bulletCount = _gameState.playerBullets.Count;
+        for ( int i=bulletCount-1 ; i>=0 ; i-- )
+        {
+            bulletCount = _gameState.playerBullets.Count;
+            GameObject playerBullet = _gameState.playerBullets[i];
+            _gameState.playerBullets.Remove(playerBullet);
+            Destroy(playerBullet.gameObject);
+        }
     }
 }
