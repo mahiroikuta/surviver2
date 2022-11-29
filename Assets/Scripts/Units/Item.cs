@@ -7,6 +7,7 @@ public enum ItemType
     Heal,
     Split,
     BulletSpeedUp,
+    Laser,
 }
 
 public abstract class Item : ScriptableObject

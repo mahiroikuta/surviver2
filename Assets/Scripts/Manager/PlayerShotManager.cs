@@ -15,7 +15,11 @@ public class PlayerShotManager : MonoBehaviour
 
     public void onUpdate()
     {
-        if ( Input.GetMouseButtonDown(0) ) shot();
+        if ( _gameState.laserOn ) shotLaser();
+        else
+        {
+            if ( Input.GetMouseButtonDown(0) ) shot();
+        }
     }
 
     void shot()
@@ -42,6 +46,32 @@ public class PlayerShotManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1f/(float)status.level);
         _gameState.isShooting = false;
+    }
+
+    void shotLaser()
+    {
+        if ( Input.GetMouseButton(0) && _gameState.chargeTime <= 3 )
+        {
+            Debug.Log("charging");
+            _gameState.charge = true;
+            _gameState.chargeTime += Time.deltaTime;
+        }
+        else if ( _gameState.charge )
+        {
+            Debug.Log("laser");
+            GameObject laser = GameObject.Instantiate(_gameState.laser, _gameState.player.transform.position, Quaternion.identity) as GameObject;
+            Vector3 shotForward = getShotForward();
+            laser.gameObject.transform.LookAt(_gameState.target.transform);
+            StartCoroutine(lasering(_gameState.chargeTime, laser));
+            _gameState.chargeTime = 0;
+            _gameState.charge = false;
+        }
+    }
+
+    IEnumerator lasering(float time, GameObject laser)
+    {
+        yield return new WaitForSeconds(time);
+        // Destroy(laser.gameObject);
     }
 
     Vector3 getShotForward()

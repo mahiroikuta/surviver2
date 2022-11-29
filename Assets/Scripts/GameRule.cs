@@ -64,6 +64,9 @@ public class GameRule : MonoBehaviour
             case ItemType.BulletSpeedUp:
                 pStatus.bulletSpeed += 1;
                 break;
+            case ItemType.Laser:
+                _gameState.laserOn = true;
+                break;
         }
         _gameState.gameStatus = GameStatus.IsPlaying;
         _gameState.itemPanel.SetActive(false);

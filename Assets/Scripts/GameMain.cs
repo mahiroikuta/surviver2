@@ -21,21 +21,29 @@ public class GameMain : MonoBehaviour
     public StatusManager statusManager;
 
     public StartButtonManager startButtonManager;
+    public RetryButtonManager retryButtonManager;
+
     public HealButtonManager healButtonManager;
     public SplitButtonManager splitButtonManager;
     public BulletSpeedUpButtonManager bulletSpeedUpButtonManager;
-    public RetryButtonManager retryButtonManager;
+    public LaserButtonManager laserButtonManager;
+    public TargetManager targetManager;
 
     void Awake()
     {
+        _gameState.laserOn = false;
+        _gameState.charge = false;
         playerSponeManager.setUp(_gameState, _gameEvent);
         _gameRule.setUp(_gameState, _gameEvent);
 
         startButtonManager.setUp(_gameState, _gameEvent);
+        retryButtonManager.setUp(_gameState, _gameEvent);
+
         healButtonManager.setUp(_gameState, _gameEvent);
         splitButtonManager.setUp(_gameState, _gameEvent);
         bulletSpeedUpButtonManager.setUp(_gameState, _gameEvent);
-        retryButtonManager.setUp(_gameState, _gameEvent);
+        laserButtonManager.setUp(_gameState, _gameEvent);
+        targetManager.setUp(_gameState, _gameEvent);
     }
 
     void Start()
@@ -58,6 +66,7 @@ public class GameMain : MonoBehaviour
         attackHitManager.onUpdate();
         enemyHitManager.onUpdate();
         hpBarManager.onUpdate();
+        targetManager.onUpdate();
         if ( _gameState.gameStatus == GameStatus.Retry )
         {
             Start();
