@@ -16,6 +16,7 @@ public class AttackHitManager : MonoBehaviour
     public void onUpdate()
     {
         bulletHitCheck();
+        laserHitCheck();
     }
 
     void bulletHitCheck()
@@ -33,7 +34,28 @@ public class AttackHitManager : MonoBehaviour
             {
                 bulletHitEnemy(playerBullet, hit);
             }
-            Debug.DrawRay(playerBullet.transform.position, direction, Color.red);
+            else if ( Physics.SphereCast(playerBullet.transform.position, 0.5f, direction, out hit, 0.75f, LayerMask.GetMask("Block")) )
+            {
+                bulletHitBlock(playerBullet, hit);
+            }
+            Debug.DrawRay(playerBullet.transform.position, direction*2, Color.red, 5);
+        }
+    }
+
+    void laserHitCheck()
+    {
+        if ( _gameState.lasers.Count == 0 ) return;
+        int count = _gameState.lasers.Count;
+        for ( int i=count-1 ; i>=0 ; i-- )
+        {
+            count = _gameState.lasers.Count;
+            GameObject laser = _gameState.lasers[i];
+            RaycastHit hit;
+            Vector3 direction = laser.transform.position - _gameState.player.transform.position;
+            if ( Physics.SphereCast(_gameState.player.transform.position, _gameState.laserScaleY, direction, out hit, laser.transform.localScale.y, LayerMask.GetMask("EnemyObject")) )
+            {
+                laserHitEnemy(hit);
+            }
         }
     }
 
@@ -48,10 +70,24 @@ public class AttackHitManager : MonoBehaviour
                 _gameEvent.bulletHitEnemy?.Invoke(playerBullet, enemy);
             }
         }
-        else
+    }
+
+    void laserHitEnemy(RaycastHit hit)
+    {
+        GameObject enemy;
+        if ( hit.collider.gameObject.GetComponent<Status>() != null )
         {
-            _gameState.playerBullets.Remove(playerBullet);
-            Destroy(playerBullet.gameObject);
+            enemy = hit.collider.gameObject;
+            if ( enemy != null )
+            {
+                _gameEvent.laserHitEnemy?.Invoke(enemy);
+            }
         }
+    }
+
+    void bulletHitBlock(GameObject playerBullet, RaycastHit hit)
+    {
+        _gameState.playerBullets.Remove(playerBullet);
+        Destroy(playerBullet.gameObject);
     }
 }

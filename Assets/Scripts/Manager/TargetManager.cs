@@ -15,7 +15,7 @@ public class TargetManager : MonoBehaviour
 
     public void onUpdate()
     {
-        if ( Input.GetMouseButtonDown(0) )
+        if ( Input.GetMouseButtonUp(0) )
         {
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 14.7f;

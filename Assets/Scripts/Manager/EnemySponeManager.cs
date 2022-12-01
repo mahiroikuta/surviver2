@@ -26,10 +26,27 @@ public class EnemySponeManager : MonoBehaviour
     public void enemySpone()
     {
         Vector3 sponePos = getSponePos();
-        GameObject enemy = GameObject.Instantiate(_gameState.enemy, sponePos, Quaternion.identity) as GameObject;
-        Status eStatus = enemy.GetComponent<Status>();
-        makeStatus(eStatus);
-        _gameState.enemys.Add(enemy);
+        Status eStatus;
+        int rand = Random.Range(1,7);
+        switch ( rand )
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                GameObject enemy = GameObject.Instantiate(_gameState.enemy, sponePos, Quaternion.identity) as GameObject;
+                eStatus = enemy.GetComponent<Status>();
+                makeEnemyStatus(eStatus);
+                _gameState.enemys.Add(enemy);
+                break;
+            case 6:
+                GameObject splitEnemy = GameObject.Instantiate(_gameState.splitEnemy, sponePos, Quaternion.identity) as GameObject;
+                eStatus = splitEnemy.GetComponent<Status>();
+                makeSplitStatus(eStatus);
+                _gameState.splitEnemys.Add(splitEnemy);
+                break;
+        }
     }
 
     Vector3 getSponePos()
@@ -61,7 +78,7 @@ public class EnemySponeManager : MonoBehaviour
         return pos;
     }
 
-    void makeStatus(Status eStatus)
+    void makeEnemyStatus(Status eStatus)
     {
         Status pStatus = _gameState.player.GetComponent<Status>();
         int level = Random.Range(1, System.Math.Min(3, pStatus.level)+1);
@@ -93,4 +110,38 @@ public class EnemySponeManager : MonoBehaviour
                 break;
         }
     }
+
+    void makeSplitStatus(Status eStatus)
+    {
+        Status pStatus = _gameState.player.GetComponent<Status>();
+        int level = Random.Range(1, System.Math.Min(3, pStatus.level)+1);
+        switch ( level )
+        {
+            case 1:
+                eStatus.level = level;
+                eStatus.maxHp = 10;
+                eStatus.hp = eStatus.maxHp;
+                eStatus.atk = 5;
+                eStatus.bulletSpeed = 1;
+                eStatus.moveSpeed = 1;
+                break;
+            case 2:
+                eStatus.level = level;
+                eStatus.maxHp = 45;
+                eStatus.hp = eStatus.maxHp;
+                eStatus.atk = 10;
+                eStatus.bulletSpeed = 2;
+                eStatus.moveSpeed = 2;
+                break;
+            case 3:
+                eStatus.level = level;
+                eStatus.maxHp = 135;
+                eStatus.hp = eStatus.maxHp;
+                eStatus.atk = 15;
+                eStatus.bulletSpeed = 14;
+                eStatus.moveSpeed = 1;
+                break;
+        }
+    }
+
 }

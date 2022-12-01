@@ -19,6 +19,8 @@ public class PlayerShotManager : MonoBehaviour
         else
         {
             if ( Input.GetMouseButtonDown(0) ) shot();
+            _gameState.useLaserTime -= Time.deltaTime;
+            if ( _gameState.useLaserTime <= 0 ) _gameState.laserOn = false;
         }
     }
 
@@ -50,28 +52,45 @@ public class PlayerShotManager : MonoBehaviour
 
     void shotLaser()
     {
+        if ( _gameState.isLasering ) return;
         if ( Input.GetMouseButton(0) && _gameState.chargeTime <= 3 )
         {
-            Debug.Log("charging");
             _gameState.charge = true;
             _gameState.chargeTime += Time.deltaTime;
         }
         else if ( _gameState.charge )
         {
-            Debug.Log("laser");
-            GameObject laser = GameObject.Instantiate(_gameState.laser, _gameState.player.transform.position, Quaternion.identity) as GameObject;
-            Vector3 shotForward = getShotForward();
-            laser.gameObject.transform.LookAt(_gameState.target.transform);
-            StartCoroutine(lasering(_gameState.chargeTime, laser));
+            _gameState.isLasering = true;
+            GameObject laserCenter = GameObject.Instantiate(_gameState.laserCenter, _gameState.player.transform.position, Quaternion.identity) as GameObject;
+            GameObject laser = laserCenter.transform.Find("Laser").gameObject;
+            laserScale(laser, _gameState.chargeTime);
+            laserPosition(laser, _gameState.chargeTime);
+            laserCenter.gameObject.transform.LookAt(_gameState.target.transform);
+            _gameState.lasers.Add(laser);
+            StartCoroutine(lasering(_gameState.laseringTime, laser));
             _gameState.chargeTime = 0;
             _gameState.charge = false;
         }
     }
 
+    void laserScale(GameObject laser, float chargeTime)
+    {
+        _gameState.laserScaleY = chargeTime * 5;
+        laser.transform.localScale =  new Vector3(0.8f, _gameState.laserScaleY, 0.8f);
+    }
+
+    void laserPosition(GameObject laser, float chargeTime)
+    {
+        float laserPosZ = chargeTime * 5 + 1;
+        laser.transform.position =  new Vector3(0f, 0f, laserPosZ);
+    }
+
     IEnumerator lasering(float time, GameObject laser)
     {
         yield return new WaitForSeconds(time);
-        // Destroy(laser.gameObject);
+        _gameState.lasers.Remove(laser);
+        Destroy(laser.gameObject);
+        _gameState.isLasering = false;
     }
 
     Vector3 getShotForward()

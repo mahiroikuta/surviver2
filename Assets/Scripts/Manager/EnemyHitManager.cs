@@ -30,10 +30,13 @@ public class EnemyHitManager : MonoBehaviour
             Vector3 direction = _gameState.player.transform.position - enemy.transform.position;
             if ( Physics.SphereCast(enemy.transform.position, 0.5f, direction, out hit, 0.75f, LayerMask.GetMask("PlayerObject")) )
             {
-
-                Debug.Log("Hit");
                 enemyHitPlayer(enemy, hit);
             }
+            else if ( Physics.SphereCast(enemy.transform.position, 0.5f, direction, out hit, 0.75f, LayerMask.GetMask("Block")) )
+            {
+                enemyHitBlock(enemy, hit);
+            }
+
             Debug.DrawRay(enemy.transform.position, direction, Color.red);
         }
     }
@@ -49,5 +52,10 @@ public class EnemyHitManager : MonoBehaviour
                 _gameEvent.enemyHitPlayer?.Invoke(enemy);
             }
         }
+    }
+
+    void enemyHitBlock(GameObject enemy, RaycastHit hit)
+    {
+        // Debug.Log("Hit");
     }
 }

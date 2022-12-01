@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class GameRule : MonoBehaviour
 
         _gameEvent.bulletHitEnemy += damageEnemy;
 
+        _gameEvent.laserHitEnemy += laserDamageEnemy;
+
         _gameEvent.useItem += useItem;
 
         _gameEvent.enemyHitPlayer += damagePlayer;
@@ -28,6 +31,19 @@ public class GameRule : MonoBehaviour
         eStatus.hp -= pStatus.atk;
         _gameState.playerBullets.Remove(playerBullet);
         Destroy(playerBullet.gameObject);
+        if ( eStatus.hp <= 0 )
+        {
+            _gameState.enemys.Remove(enemy);
+            Destroy(enemy.gameObject);
+            pStatus.exp += 1;
+        }
+    }
+
+    void laserDamageEnemy(GameObject enemy)
+    {
+        Status pStatus = _gameState.player.GetComponent<Status>();
+        Status eStatus = enemy.GetComponent<Status>();
+        eStatus.hp -= pStatus.atk;
         if ( eStatus.hp <= 0 )
         {
             _gameState.enemys.Remove(enemy);

@@ -17,14 +17,20 @@ public class GameState
 {
     public GameObject player;
     public GameObject playerBullet;
-    public GameObject laser;
+    public GameObject laserCenter;
     public GameObject target;
 
     public GameObject enemy;
+    public GameObject splitEnemy;
+    public GameObject splitChild;
 
     public int enemySponeTime;
     public float elapsedTime;
     public float chargeTime;
+    public float laseringTime;
+    public float useLaserTime;
+
+    public float laserScaleY;
 
     public Button healButton;
     public Button splitButton;
@@ -55,5 +61,11 @@ public class GameState
     public List<GameObject> playerBullets = new List<GameObject>();
 
     [System.NonSerialized]
+    public List<GameObject> lasers = new List<GameObject>();
+
+    [System.NonSerialized]
     public List<GameObject> enemys = new List<GameObject>();
+
+    [System.NonSerialized]
+    public List<GameObject> splitEnemys = new List<GameObject>();
 }

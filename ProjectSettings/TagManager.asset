@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Laser
   - Water
   - UI
   - PlayerObject
   - EnemyObject
-  - 
+  - Block
   - 
   - 
   - 
