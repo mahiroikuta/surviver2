@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4784652211394171862}
   - component: {fileID: 6593581967888186152}
   - component: {fileID: 6957003821197963449}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4793202201619932533}
   - component: {fileID: 6010963444285317215}
   - component: {fileID: 6025071354346654706}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7506708715792920340}
   - component: {fileID: 6521483617686377158}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EnemyHpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 6588882547509346846}
   - component: {fileID: 6588882547509346842}
   - component: {fileID: 3940244157114603145}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: SplitEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,9 +351,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   maxHp: 40
-  hp: 10
-  moveSpeed: 0
-  atk: 0
+  hp: 40
+  moveSpeed: 1
+  atk: 5
   bulletSpeed: 0
   splitLevel: 0
   exp: 0
@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 3370115967164046754}
   - component: {fileID: 5043601788701028138}
   - component: {fileID: 5385146064570546024}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: HpBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1932615822215427626}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}

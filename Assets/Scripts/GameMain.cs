@@ -65,6 +65,7 @@ public class GameMain : MonoBehaviour
         UIManager.onUpdate();
         attackHitManager.onUpdate();
         enemyHitManager.onUpdate();
+        enemyMoveManager.onUpdate();
         hpBarManager.onUpdate();
         targetManager.onUpdate();
         if ( _gameState.gameStatus == GameStatus.Retry )
@@ -75,7 +76,6 @@ public class GameMain : MonoBehaviour
         if ( _gameState.gameStatus != GameStatus.IsPlaying ) return;
         playerShotManager.onUpdate();
         enemySponeManager.onUpdate();
-        enemyMoveManager.onUpdate();
         statusManager.onUpdate();
     }
 }

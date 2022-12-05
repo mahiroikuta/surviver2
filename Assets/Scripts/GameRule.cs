@@ -15,6 +15,8 @@ public class GameRule : MonoBehaviour
 
         _gameEvent.bulletHitEnemy += damageEnemy;
 
+        _gameEvent.bulletHitSplitEnemy += damageSplitEnemy;
+
         _gameEvent.laserHitEnemy += laserDamageEnemy;
 
         _gameEvent.useItem += useItem;
@@ -37,6 +39,29 @@ public class GameRule : MonoBehaviour
             Destroy(enemy.gameObject);
             pStatus.exp += 1;
         }
+    }
+
+    void damageSplitEnemy(GameObject playerBullet, GameObject splitEnemy)
+    {
+        Status pStatus = _gameState.player.GetComponent<Status>();
+        Status eStatus = enemy.GetComponent<Status>();
+        eStatus.hp -= pStatus.atk;
+        _gameState.playerBullets.Remove(playerBullet);
+        Destroy(playerBullet.gameObject);
+        if ( eStatus.hp <= 0 )
+        {
+            _gameState.enemys.Remove(enemy);
+            Vector3 splitPos = enemy.gameObject.transform.position; 
+            splitEnemy(splitPos);
+            Destroy(enemy.gameObject);
+
+            pStatus.exp += 1;
+        }
+    }
+
+    void splitEnemy(Vector3 splitPos)
+    {
+
     }
 
     void laserDamageEnemy(GameObject enemy)
@@ -75,7 +100,7 @@ public class GameRule : MonoBehaviour
                 if ( pStatus.hp > pStatus.maxHp ) pStatus.hp = pStatus.maxHp;
                 break;
             case ItemType.Split:
-                pStatus.splitLevel += 1;
+                if ( pStatus.splitLevel < 24 ) pStatus.splitLevel += 1;
                 break;
             case ItemType.BulletSpeedUp:
                 pStatus.bulletSpeed += 1;

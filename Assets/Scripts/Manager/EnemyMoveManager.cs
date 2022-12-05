@@ -31,6 +31,11 @@ public class EnemyMoveManager : MonoBehaviour
             float speed = (float)eStatus.moveSpeed/3;
             // enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, _gameState.player.transform.position, speed);
             Vector3 vec = (_gameState.player.transform.position - enemy.transform.position).normalized;
+            if ( _gameState.gameStatus == GameStatus.ItemChoosing )
+            {
+                eRig.velocity = vec * 0f;
+                continue;
+            }
             eRig.velocity = vec * speed;
         }
     }

@@ -21,6 +21,7 @@ public class EnemySponeManager : MonoBehaviour
             enemySpone();
             _gameState.elapsedTime = 0;
         }
+        if ( _gameState.splited ) splitChildSpone();
     }
 
     public void enemySpone()
@@ -142,6 +143,11 @@ public class EnemySponeManager : MonoBehaviour
                 eStatus.moveSpeed = 1;
                 break;
         }
+    }
+
+    void splitChildSpone()
+    {
+        
     }
 
 }

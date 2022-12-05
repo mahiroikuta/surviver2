@@ -55,6 +55,8 @@ public class GameState
     public bool laserOn;
     [System.NonSerialized]
     public bool charge;
+    [System.NonSerialized]
+    public bool splited;
 
 
     [System.NonSerialized]
